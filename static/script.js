@@ -5,7 +5,6 @@ function getRecommendations() {
     const recommendationsList = document.getElementById('recommendations');
     const courseTable = document.getElementById('courseTable');
 
-    // Reset previous results
     message.textContent = '';
     recommendationsList.innerHTML = '';
 
@@ -14,10 +13,8 @@ function getRecommendations() {
         return;
     }
 
-    // Show loader
     loader.style.display = 'block';
 
-    // Fetch recommendations
     fetch(`/recommendations?user_id=${userId}`)
         .then(response => {
             if (!response.ok) {
@@ -26,7 +23,7 @@ function getRecommendations() {
             return response.json();
         })
         .then(data => {
-            loader.style.display = 'none'; // Hide loader
+            loader.style.display = 'none';
             if (data.message) {
                 message.textContent = data.message;
             } else if (data.length === 0) {
@@ -52,7 +49,7 @@ function getRecommendations() {
             }
         })
         .catch(error => {
-            loader.style.display = 'none'; // Hide loader
+            loader.style.display = 'none';
             if (error.message === 'User not found') {
                 message.textContent = 'No recommendations found for this user.';
             } else {
